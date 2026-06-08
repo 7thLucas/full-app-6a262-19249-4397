@@ -41,6 +41,17 @@ export class AnalysisSession extends TimeStamps {
   /** Total duration of the audio in milliseconds */
   @prop({ type: Number, required: false })
   durationMs?: number;
+
+  /** URL of the stored media file (audio or video) */
+  @prop({ type: String, required: false })
+  mediaUrl?: string;
+
+  /**
+   * Full transcription text, or a JSON-serialised array of
+   * { speaker, text, start_ms, end_ms } segment objects.
+   */
+  @prop({ type: String, required: false })
+  transcription?: string;
 }
 
 export const AnalysisSessionModel = getModelForClass(AnalysisSession);

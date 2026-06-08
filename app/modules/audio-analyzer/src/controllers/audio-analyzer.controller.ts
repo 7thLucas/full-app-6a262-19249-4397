@@ -96,13 +96,15 @@ export async function postSaveSession(req: Request, res: Response) {
     return res.status(401).json({ ok: false, message: "Authentication required" });
   }
 
-  const { ticketId, filename, candidateName, analysis, status, durationMs } = req.body as {
+  const { ticketId, filename, candidateName, analysis, status, durationMs, mediaUrl, transcription } = req.body as {
     ticketId: string;
     filename: string;
     candidateName?: string;
     analysis: unknown;
     status?: string;
     durationMs?: number;
+    mediaUrl?: string;
+    transcription?: string;
   };
 
   if (!ticketId || !filename) {
@@ -117,6 +119,8 @@ export async function postSaveSession(req: Request, res: Response) {
     analysis: analysis as any,
     status: status ?? "completed",
     durationMs,
+    mediaUrl,
+    transcription,
   });
 
   return res.json({ ok: true, session });

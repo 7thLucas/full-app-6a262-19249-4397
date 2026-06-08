@@ -33,6 +33,13 @@ export type PersistedSession = {
   summary?: string;
   status: string;
   durationMs?: number;
+  /** URL of the stored media file (audio or video). Null when no recording was saved. */
+  mediaUrl?: string | null;
+  /**
+   * Full transcription — either a plain string or a JSON-encoded array of
+   * { speaker_id, speaker_name, text, start_ms, end_ms } objects.
+   */
+  transcription?: string | null;
   createdAt: string;
   updatedAt: string;
 };

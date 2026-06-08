@@ -9,6 +9,8 @@ export type CreateAnalysisSessionInput = {
   analysis: AnalysisResult | null;
   status: string;
   durationMs?: number;
+  mediaUrl?: string;
+  transcription?: string;
 };
 
 /** Derive an overall 0-100 score from the analysis result. */
@@ -104,6 +106,8 @@ export class AnalysisSessionService {
           ...(summary !== undefined && { summary }),
           status: input.status,
           ...(input.durationMs !== undefined && { durationMs: input.durationMs }),
+          ...(input.mediaUrl !== undefined && { mediaUrl: input.mediaUrl }),
+          ...(input.transcription !== undefined && { transcription: input.transcription }),
         },
       },
       { upsert: true, new: true },
