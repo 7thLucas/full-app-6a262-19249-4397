@@ -1,0 +1,56 @@
+<style>
+  .mode-landscape .sl-layout { flex-direction: row; }
+  .mode-portrait .sl-layout { flex-direction: column; }
+  .mode-landscape .sl-content-col { width: 52%; }
+  .mode-portrait .sl-content-col { width: 100%; }
+  .mode-landscape .sl-visual-col { width: 48%; }
+  .mode-portrait .sl-visual-col { width: 100%; height: 40%; }
+</style>
+
+<section class="w-full h-full overflow-auto bg-white">
+  <div class="sl-layout flex h-full">
+
+    <!-- Content column -->
+    <div class="sl-content-col flex flex-col justify-between p-12 bg-white">
+
+      <!-- Top: wordmark -->
+      <div>
+        <span class="text-xs font-semibold tracking-widest uppercase text-amber-500">InterviewLens</span>
+      </div>
+
+      <!-- Middle: headline + tagline -->
+      <div>
+        <h1 class="text-5xl font-extrabold leading-tight text-slate-900 mb-6">
+          Turn interview<br>recordings into<br>honest insight.
+        </h1>
+        <p class="text-lg text-slate-600 max-w-sm leading-relaxed">
+          Audio intelligence built for the interview workflow — from first word to final report.
+        </p>
+      </div>
+
+      <!-- Bottom: attribution -->
+      <div class="flex items-center gap-4">
+        <div class="w-10 h-px bg-amber-400"></div>
+        <data-attribution />
+      </div>
+
+    </div>
+
+    <!-- Visual column -->
+    <div class="sl-visual-col relative overflow-hidden">
+      <img
+        src="https://api-stag.qb-deck.quantumbyte.ai/common/image-generation?prompt=abstract%20waveform%20audio%20visualization%20navy%20and%20amber%20tones%20minimalist%20editorial%20dark%20background%20glowing%20lines"
+        alt="Audio waveform visualization"
+        class="w-full h-full object-cover"
+      />
+      <!-- subtle overlay to keep brand feel -->
+      <div class="absolute inset-0 bg-slate-900 opacity-20"></div>
+      <!-- bottom label band -->
+      <div class="absolute bottom-0 left-0 right-0 px-8 py-5 bg-slate-900 bg-opacity-80">
+        <p class="text-amber-400 text-xs font-semibold tracking-widest uppercase">Audio Analysis Platform</p>
+        <p class="text-white text-sm mt-1 opacity-80">Hiring · UX Research · Journalism</p>
+      </div>
+    </div>
+
+  </div>
+</section>
