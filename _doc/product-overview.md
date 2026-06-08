@@ -37,7 +37,7 @@ InterviewLens processes interview audio automatically and returns:
 - **Filler and hesitation detection** — counts of "um", "uh", pauses, restarts per speaker.
 - **Session summary** — AI-generated executive summary with top 3–5 highlights.
 - **Export and sharing** — PDF report and shareable link with access control.
-- **Analysis history** — the dashboard stores every uploaded recording and its full analysis results; users can browse, search, and re-open any past session from a persistent library in the Analysis section.
+- **Analysis history** — the dashboard stores every uploaded recording and its complete analysis results; users can browse, search, and re-open any past session from a persistent library in the Analysis section. Each session detail view displays: the original audio/video recording (playable inline), the full timestamped transcript, and every analysis layer (sentiment arc, topic extraction, talk-time ratio, filler detection, session summary, and export options).
 
 ## Positioning
 Premium, privacy-first audio intelligence for professionals who run structured interviews. Not a generic transcription tool — built for the interview workflow end to end.
