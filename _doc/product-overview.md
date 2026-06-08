@@ -24,7 +24,7 @@ InterviewLens processes interview audio automatically and returns:
 - Exportable report for sharing with stakeholders
 
 ## Target Users
-1. **Hiring managers and recruiters** — evaluate candidates consistently and reduce bias in post-interview reviews.
+1. **HR managers** — evaluate candidates consistently and reduce bias in post-interview reviews; upload recordings via the dashboard.
 2. **UX researchers** — synthesize findings across multiple sessions without manual transcription effort.
 3. **Journalists and investigators** — surface key claims, contradictions, and topic threads from long-form interviews.
 
