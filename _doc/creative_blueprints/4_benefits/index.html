@@ -1,0 +1,87 @@
+<style>
+  .mode-landscape .sl-grid { grid-template-columns: repeat(3, 1fr); }
+  .mode-portrait .sl-grid { grid-template-columns: repeat(2, 1fr); }
+  .mode-landscape .sl-roi { grid-column: span 3; }
+  .mode-portrait .sl-roi { grid-column: span 2; }
+</style>
+
+<section class="w-full h-full overflow-auto bg-white">
+  <div class="h-full flex flex-col p-12">
+
+    <p class="text-xs font-semibold tracking-widest uppercase text-amber-500 mb-2">Measurable Outcomes</p>
+    <h2 class="text-3xl font-extrabold text-slate-900 mb-8">Results you can report on.</h2>
+
+    <div class="sl-grid grid gap-4 flex-1 min-h-0">
+
+      <!-- Metric card 1 -->
+      <div class="rounded-xl border border-slate-200 bg-slate-50 p-6 flex flex-col gap-2">
+        <span class="text-xs font-semibold tracking-widest uppercase text-slate-500">Speed</span>
+        <span class="text-4xl font-extrabold text-slate-900">&lt;60s</span>
+        <p class="text-slate-600 text-xs leading-relaxed">First analysis results for a 30-minute session — no waiting, no queue.</p>
+      </div>
+
+      <!-- Metric card 2 -->
+      <div class="rounded-xl border border-slate-200 bg-slate-50 p-6 flex flex-col gap-2">
+        <span class="text-xs font-semibold tracking-widest uppercase text-slate-500">Consistency</span>
+        <span class="text-4xl font-extrabold text-amber-500">100%</span>
+        <p class="text-slate-600 text-xs leading-relaxed">Sessions evaluated on the same structured criteria — bias removed from the review.</p>
+      </div>
+
+      <!-- Metric card 3 -->
+      <div class="rounded-xl border border-slate-200 bg-slate-50 p-6 flex flex-col gap-2">
+        <span class="text-xs font-semibold tracking-widest uppercase text-slate-500">Time Saved</span>
+        <span class="text-4xl font-extrabold text-slate-900">~4h</span>
+        <p class="text-slate-600 text-xs leading-relaxed">Per session compared to manual transcription and note synthesis.</p>
+      </div>
+
+      <!-- Metric card 4 -->
+      <div class="rounded-xl border border-slate-200 bg-slate-50 p-6 flex flex-col gap-2">
+        <span class="text-xs font-semibold tracking-widest uppercase text-slate-500">Privacy</span>
+        <span class="text-4xl font-extrabold text-slate-900">0</span>
+        <p class="text-slate-600 text-xs leading-relaxed">Audio retained after processing. Transcripts encrypted at rest.</p>
+      </div>
+
+      <!-- Metric card 5 -->
+      <div class="rounded-xl border border-slate-200 bg-slate-50 p-6 flex flex-col gap-2">
+        <span class="text-xs font-semibold tracking-widest uppercase text-slate-500">Coverage</span>
+        <span class="text-4xl font-extrabold text-amber-500">8+</span>
+        <p class="text-slate-600 text-xs leading-relaxed">Distinct intelligence layers extracted per session — from sentiment to filler words.</p>
+      </div>
+
+      <!-- Metric card 6 -->
+      <div class="rounded-xl border border-slate-200 bg-slate-50 p-6 flex flex-col gap-2">
+        <span class="text-xs font-semibold tracking-widest uppercase text-slate-500">Formats</span>
+        <span class="text-4xl font-extrabold text-slate-900">MP3 WAV M4A</span>
+        <p class="text-slate-600 text-xs leading-relaxed mt-1">Every major audio format supported, plus in-browser recording.</p>
+      </div>
+
+      <!-- ROI summary -->
+      <div class="sl-roi rounded-2xl bg-slate-900 p-8 flex flex-col gap-4">
+        <div class="flex items-center gap-4">
+          <div class="w-1 h-10 bg-amber-400 rounded-full flex-shrink-0"></div>
+          <div>
+            <p class="text-xs font-semibold tracking-widest uppercase text-amber-400 mb-1">ROI Summary</p>
+            <p class="text-white text-lg font-bold leading-snug">
+              One Pro seat at $19/mo replaces hours of manual review per week — and delivers a shareable, stakeholder-ready report every time.
+            </p>
+          </div>
+        </div>
+        <div class="flex gap-6 flex-wrap pt-2">
+          <div class="flex items-center gap-2">
+            <div class="w-2 h-2 rounded-full bg-amber-400"></div>
+            <span class="text-slate-300 text-xs">Free: 3 sessions/mo · 30 min</span>
+          </div>
+          <div class="flex items-center gap-2">
+            <div class="w-2 h-2 rounded-full bg-amber-400"></div>
+            <span class="text-slate-300 text-xs">Pro $19/mo: unlimited · 2 hr sessions</span>
+          </div>
+          <div class="flex items-center gap-2">
+            <div class="w-2 h-2 rounded-full bg-amber-400"></div>
+            <span class="text-slate-300 text-xs">Team $79/mo: shared workspace · 5 seats</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
