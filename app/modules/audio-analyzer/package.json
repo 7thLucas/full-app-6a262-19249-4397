@@ -3,8 +3,8 @@
   "version": "1.0.0",
   "description": "Module for connecting to the audio analyzer microservice",
   "type": "module",
-  "main": "./src/index.ts",
+  "main": "./index.ts",
   "exports": {
-    ".": "./src/index.ts"
+    ".": "./index.ts"
   }
 }
