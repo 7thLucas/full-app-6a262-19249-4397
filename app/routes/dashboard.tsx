@@ -3,6 +3,7 @@ import type { LoaderFunctionArgs } from "react-router";
 import { redirect } from "react-router";
 import { getUserFromRequest } from "~/modules/authentication/authentication.server";
 import { useConfigurables } from "~/modules/configurables";
+import { useSessions } from "@qb/audio-analyzer";
 import { AppLayout, PageHeader } from "~/components/app-layout";
 import {
   PlusCircle,
@@ -13,6 +14,7 @@ import {
   Mic2,
   FileText,
   BarChart2,
+  History,
 } from "lucide-react";
 
 export async function loader({ request }: LoaderFunctionArgs) {
@@ -21,43 +23,20 @@ export async function loader({ request }: LoaderFunctionArgs) {
   return { user };
 }
 
-// Placeholder session data for demo purposes
-const DEMO_SESSIONS = [
-  {
-    id: "demo-1",
-    filename: "candidate_sarah_chen.mp3",
-    duration: "32:14",
-    status: "completed",
-    createdAt: "2026-06-07T14:22:00Z",
-    summary: "Strong communication skills. High engagement on technical questions. Some hesitation on leadership topics.",
-    scores: { overall: 82, communication: 88, engagement: 90, topicCoverage: 76, interviewQuality: 80 },
-  },
-  {
-    id: "demo-2",
-    filename: "research_session_june6.wav",
-    duration: "58:03",
-    status: "completed",
-    createdAt: "2026-06-06T10:05:00Z",
-    summary: "Deep exploration of UX pain points. Candidate articulated user journey clearly with specific examples.",
-    scores: { overall: 91, communication: 89, engagement: 94, topicCoverage: 93, interviewQuality: 87 },
-  },
-  {
-    id: "demo-3",
-    filename: "initial_screening_alex.m4a",
-    duration: "18:47",
-    status: "completed",
-    createdAt: "2026-06-05T16:30:00Z",
-    summary: "Brief screening call. Basic qualifications confirmed. Recommend full interview round.",
-    scores: { overall: 68, communication: 72, engagement: 65, topicCoverage: 70, interviewQuality: 73 },
-  },
-];
-
 function formatDate(iso: string) {
   return new Date(iso).toLocaleDateString("en-US", {
     month: "short",
     day: "numeric",
     year: "numeric",
   });
+}
+
+function formatDuration(durationMs: number | undefined): string {
+  if (durationMs === undefined) return "—";
+  const totalSeconds = Math.floor(durationMs / 1000);
+  const minutes = Math.floor(totalSeconds / 60);
+  const seconds = totalSeconds % 60;
+  return `${minutes}:${seconds.toString().padStart(2, "0")}`;
 }
 
 function StatusBadge({ status }: { status: string }) {
@@ -104,25 +83,29 @@ function ScoreBar({ value }: { value: number }) {
 export default function DashboardPage() {
   const { config, loading } = useConfigurables();
   const navigate = useNavigate();
+  const { sessions, isLoading: sessionsLoading, error: sessionsError } = useSessions();
 
   const dashboardHeading = loading
     ? "Your Sessions"
     : (config.dashboardHeading ?? "Your Sessions");
 
+  const totalHoursMs = sessions.reduce((sum, s) => sum + (s.durationMs ?? 0), 0);
+  const totalHours = totalHoursMs > 0
+    ? (totalHoursMs / 3_600_000).toFixed(1) + "h"
+    : "—";
+  const completedSessions = sessions.filter((s) => s.status === "completed");
+  const avgScore =
+    completedSessions.length > 0
+      ? Math.round(
+          completedSessions.reduce((s, d) => s + (d.overallScore ?? 0), 0) /
+            completedSessions.length,
+        )
+      : 0;
+
   const statsData = [
-    { label: "Total Sessions", value: DEMO_SESSIONS.length, icon: FileText },
-    {
-      label: "Avg. Score",
-      value: Math.round(
-        DEMO_SESSIONS.reduce((s, d) => s + d.scores.overall, 0) / DEMO_SESSIONS.length
-      ),
-      icon: BarChart2,
-    },
-    {
-      label: "Hours Analyzed",
-      value: "1.8h",
-      icon: Clock,
-    },
+    { label: "Total Sessions", value: sessions.length, icon: FileText },
+    { label: "Avg. Score", value: completedSessions.length > 0 ? avgScore : "—", icon: BarChart2 },
+    { label: "Hours Analyzed", value: totalHours, icon: Clock },
   ];
 
   return (
@@ -131,13 +114,22 @@ export default function DashboardPage() {
         title={dashboardHeading}
         subtitle="All your analyzed interview sessions"
         actions={
-          <Link
-            to="/analyze"
-            className="inline-flex items-center gap-2 bg-accent text-accent-foreground text-sm font-semibold px-4 py-2 rounded-md hover:bg-accent/90 transition-colors"
-          >
-            <PlusCircle className="w-4 h-4" />
-            New Analysis
-          </Link>
+          <div className="flex items-center gap-2">
+            <Link
+              to="/analysis-history"
+              className="inline-flex items-center gap-2 bg-muted text-foreground text-sm font-medium px-4 py-2 rounded-md hover:bg-muted/80 transition-colors"
+            >
+              <History className="w-4 h-4" />
+              History
+            </Link>
+            <Link
+              to="/analyze"
+              className="inline-flex items-center gap-2 bg-accent text-accent-foreground text-sm font-semibold px-4 py-2 rounded-md hover:bg-accent/90 transition-colors"
+            >
+              <PlusCircle className="w-4 h-4" />
+              New Analysis
+            </Link>
+          </div>
         }
       />
 
@@ -163,46 +155,94 @@ export default function DashboardPage() {
           <h2 className="text-sm font-semibold text-muted-foreground uppercase tracking-wide mb-3">
             Recent Sessions
           </h2>
-          <div className="space-y-3">
-            {DEMO_SESSIONS.map((session) => (
+
+          {sessionsLoading && (
+            <div className="flex items-center justify-center py-12 text-muted-foreground">
+              <Loader2 className="w-5 h-5 animate-spin mr-2" />
+              <span className="text-sm">Loading sessions…</span>
+            </div>
+          )}
+
+          {sessionsError && (
+            <div className="flex items-center gap-2 text-sm text-destructive bg-destructive/5 border border-destructive/20 rounded-md px-4 py-3">
+              <AlertCircle className="w-4 h-4 shrink-0" />
+              {sessionsError}
+            </div>
+          )}
+
+          {!sessionsLoading && !sessionsError && sessions.length === 0 && (
+            <div className="text-center py-16 bg-card border border-dashed border-border rounded-xl">
+              <Mic2 className="w-10 h-10 text-muted-foreground mx-auto mb-3" />
+              <p className="font-medium text-foreground">No sessions yet</p>
+              <p className="text-sm text-muted-foreground mt-1 mb-4">
+                Upload your first interview recording to get started.
+              </p>
               <Link
-                key={session.id}
-                to={`/sessions/${session.id}`}
-                className="block bg-card border border-border rounded-lg p-5 hover:border-accent/40 hover:shadow-sm transition-all group"
+                to="/analyze"
+                className="inline-flex items-center gap-2 bg-accent text-accent-foreground text-sm font-semibold px-4 py-2 rounded-md hover:bg-accent/90 transition-colors"
               >
-                <div className="flex items-start justify-between gap-4">
-                  <div className="flex items-start gap-3 min-w-0">
-                    <div className="w-9 h-9 rounded-md bg-muted flex items-center justify-center shrink-0 group-hover:bg-accent/10 transition-colors">
-                      <Mic2 className="w-4 h-4 text-muted-foreground group-hover:text-accent transition-colors" />
-                    </div>
-                    <div className="min-w-0">
-                      <p className="font-medium text-foreground truncate">{session.filename}</p>
-                      <div className="flex items-center gap-3 mt-1">
-                        <span className="text-xs text-muted-foreground font-mono">
-                          {session.duration}
-                        </span>
-                        <span className="text-xs text-muted-foreground">
-                          {formatDate(session.createdAt)}
-                        </span>
-                        <StatusBadge status={session.status} />
+                <PlusCircle className="w-4 h-4" />
+                New Analysis
+              </Link>
+            </div>
+          )}
+
+          {!sessionsLoading && !sessionsError && sessions.length > 0 && (
+            <div className="space-y-3">
+              {sessions.slice(0, 10).map((session) => (
+                <Link
+                  key={session._id}
+                  to={`/sessions/${session._id}`}
+                  className="block bg-card border border-border rounded-lg p-5 hover:border-accent/40 hover:shadow-sm transition-all group"
+                >
+                  <div className="flex items-start justify-between gap-4">
+                    <div className="flex items-start gap-3 min-w-0">
+                      <div className="w-9 h-9 rounded-md bg-muted flex items-center justify-center shrink-0 group-hover:bg-accent/10 transition-colors">
+                        <Mic2 className="w-4 h-4 text-muted-foreground group-hover:text-accent transition-colors" />
+                      </div>
+                      <div className="min-w-0">
+                        <p className="font-medium text-foreground truncate">
+                          {session.candidateName ?? session.filename}
+                        </p>
+                        <div className="flex items-center gap-3 mt-1">
+                          {session.durationMs !== undefined && (
+                            <span className="text-xs text-muted-foreground font-mono">
+                              {formatDuration(session.durationMs)}
+                            </span>
+                          )}
+                          <span className="text-xs text-muted-foreground">
+                            {formatDate(session.createdAt)}
+                          </span>
+                          <StatusBadge status={session.status} />
+                        </div>
                       </div>
                     </div>
+                    {session.overallScore !== undefined && (
+                      <div className="shrink-0 w-32">
+                        <p className="text-xs text-muted-foreground mb-1 text-right">
+                          Overall Score
+                        </p>
+                        <ScoreBar value={session.overallScore} />
+                      </div>
+                    )}
                   </div>
-                  <div className="shrink-0 w-32">
-                    <p className="text-xs text-muted-foreground mb-1 text-right">
-                      Overall Score
+                  {session.summary && (
+                    <p className="mt-3 text-sm text-muted-foreground line-clamp-2">
+                      {session.summary}
                     </p>
-                    <ScoreBar value={session.scores.overall} />
-                  </div>
-                </div>
-                {session.summary && (
-                  <p className="mt-3 text-sm text-muted-foreground line-clamp-2">
-                    {session.summary}
-                  </p>
-                )}
-              </Link>
-            ))}
-          </div>
+                  )}
+                </Link>
+              ))}
+              {sessions.length > 10 && (
+                <Link
+                  to="/analysis-history"
+                  className="block text-center text-sm text-accent font-medium py-3 hover:underline"
+                >
+                  View all {sessions.length} sessions in History
+                </Link>
+              )}
+            </div>
+          )}
         </div>
       </div>
     </AppLayout>

@@ -18,6 +18,7 @@ export function TranscriptionResultRoot({
   ticketId,
   pollIntervalMs,
   enabled,
+  filename,
   className,
   children,
   ...props
@@ -27,6 +28,7 @@ export function TranscriptionResultRoot({
       ticketId={ticketId}
       pollIntervalMs={pollIntervalMs}
       enabled={enabled}
+      filename={filename}
     >
       <div className={cn("w-full", className)} {...props}>
         {children}

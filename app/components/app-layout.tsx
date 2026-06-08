@@ -9,12 +9,14 @@ import {
   X,
   Mic2,
   ChevronRight,
+  History,
 } from "lucide-react";
 import { useState } from "react";
 
 const navItems = [
   { label: "Dashboard", href: "/dashboard", icon: LayoutDashboard },
   { label: "New Analysis", href: "/analyze", icon: PlusCircle },
+  { label: "Analysis History", href: "/analysis-history", icon: History },
 ];
 
 export function AppLayout({ children }: { children: React.ReactNode }) {

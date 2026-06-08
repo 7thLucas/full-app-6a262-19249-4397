@@ -1,4 +1,5 @@
 import type {
+  AnalysisResult,
   ResponseEnvelope,
   TrackTranscribeResult,
   TranscribeResult,
@@ -19,6 +20,21 @@ export class AudioAnalyzerClientError extends Error {
 export type QueueTranscriptionOptions = {
   analysis_options?: TranscriptionAnalysisOptions;
   signal?: AbortSignal;
+};
+
+export type PersistedSession = {
+  _id: string;
+  userId: string;
+  ticketId: string;
+  filename: string;
+  candidateName?: string;
+  overallScore?: number;
+  categoryScores?: Record<string, number>;
+  summary?: string;
+  status: string;
+  durationMs?: number;
+  createdAt: string;
+  updatedAt: string;
 };
 
 async function readJsonBody(res: Response): Promise<unknown> {
@@ -99,4 +115,59 @@ export async function getTranscriptionStatus(
   );
   const envelope = await parseEnvelope<TrackTranscribeResult>(res);
   return envelope.result;
+}
+
+/** POST /api/audio-analyzer/sessions — persist a completed analysis session. */
+export async function saveAnalysisSession(input: {
+  ticketId: string;
+  filename: string;
+  candidateName?: string;
+  analysis: AnalysisResult | null;
+  status: string;
+  durationMs?: number;
+}): Promise<PersistedSession> {
+  const res = await fetch("/api/audio-analyzer/sessions", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(input),
+  });
+  const body = (await readJsonBody(res)) as { ok: boolean; session: PersistedSession; message?: string };
+  if (!res.ok || !body.ok) {
+    throw new AudioAnalyzerClientError(
+      body.message ?? `Failed to save session (${res.status})`,
+      res.status,
+      body,
+    );
+  }
+  return body.session;
+}
+
+/** GET /api/audio-analyzer/sessions — list all persisted sessions for the current user. */
+export async function fetchSessions(init?: { signal?: AbortSignal }): Promise<PersistedSession[]> {
+  const res = await fetch("/api/audio-analyzer/sessions", { signal: init?.signal });
+  const body = (await readJsonBody(res)) as { ok: boolean; sessions: PersistedSession[]; message?: string };
+  if (!res.ok || !body.ok) {
+    throw new AudioAnalyzerClientError(
+      body.message ?? `Failed to fetch sessions (${res.status})`,
+      res.status,
+      body,
+    );
+  }
+  return body.sessions ?? [];
+}
+
+/** GET /api/audio-analyzer/sessions/:id — get a single persisted session. */
+export async function fetchSessionById(id: string, init?: { signal?: AbortSignal }): Promise<PersistedSession> {
+  const res = await fetch(`/api/audio-analyzer/sessions/${encodeURIComponent(id)}`, {
+    signal: init?.signal,
+  });
+  const body = (await readJsonBody(res)) as { ok: boolean; session: PersistedSession; message?: string };
+  if (!res.ok || !body.ok) {
+    throw new AudioAnalyzerClientError(
+      body.message ?? `Failed to fetch session (${res.status})`,
+      res.status,
+      body,
+    );
+  }
+  return body.session;
 }

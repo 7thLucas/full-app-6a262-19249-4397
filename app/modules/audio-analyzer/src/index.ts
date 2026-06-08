@@ -10,6 +10,8 @@
 
 export * from "./hooks/use-transcribe";
 export * from "./hooks/use-transcription-result";
+export * from "./hooks/use-sessions";
+export type { PersistedSession } from "./libs/audio-analyzer.client";
 export {
   TranscriptionResult,
   TranscriptionResultProvider,

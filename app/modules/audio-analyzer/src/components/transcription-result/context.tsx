@@ -60,6 +60,8 @@ export type TranscriptionResultProviderProps = {
   ticketId: string;
   pollIntervalMs?: number;
   enabled?: boolean;
+  /** Original upload filename used when persisting the session record. */
+  filename?: string;
   children: ReactNode;
 };
 
@@ -67,9 +69,10 @@ export function TranscriptionResultProvider({
   ticketId,
   pollIntervalMs,
   enabled,
+  filename,
   children,
 }: TranscriptionResultProviderProps) {
-  const polling = useTranscriptionResult(ticketId, { pollIntervalMs, enabled });
+  const polling = useTranscriptionResult(ticketId, { pollIntervalMs, enabled, filename });
   const [selectedCategory, setSelectedCategory] = useState(ALL_CATEGORIES);
   const [activeTimestampMs, setActiveTimestampMs] = useState<number | null>(null);
 

@@ -1,3 +1,4 @@
+import React from "react";
 import type { LoaderFunctionArgs } from "react-router";
 import { redirect } from "react-router";
 import { getUserFromRequest } from "~/modules/authentication/authentication.server";
@@ -19,6 +20,7 @@ export async function loader({ request }: LoaderFunctionArgs) {
 export default function AnalyzePage() {
   const { config, loading } = useConfigurables();
   const { submit, ticketId, isSubmitting, error: submitError } = useTranscribe();
+  const [uploadedFilename, setUploadedFilename] = React.useState<string | undefined>(undefined);
 
   const uploadHeading = loading
     ? "Analyze a New Interview"
@@ -54,7 +56,10 @@ export default function AnalyzePage() {
             <h2 className="text-base font-semibold text-foreground mb-4">Upload Recording</h2>
             <TranscriptionUpload
               isLoading={isSubmitting}
-              onUpload={(file) => submit({ files: file })}
+              onUpload={(file) => {
+                setUploadedFilename(file.name);
+                submit({ files: file });
+              }}
               label="Click or drag your audio file here"
               hint={uploadHint}
               loadingLabel="Uploading and queuing analysis…"
@@ -72,7 +77,7 @@ export default function AnalyzePage() {
         {/* Analysis result — shows once a ticket is queued */}
         {ticketId && (
           <div className="bg-card border border-border rounded-xl overflow-hidden">
-            <TranscriptionResult ticketId={ticketId}>
+            <TranscriptionResult ticketId={ticketId} filename={uploadedFilename}>
               <TranscriptionResult.Loading />
               <TranscriptionResult.Error />
               <TranscriptionResult.Content>
