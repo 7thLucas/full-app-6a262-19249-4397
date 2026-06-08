@@ -1,0 +1,108 @@
+<style>
+  .mode-landscape .sl-grid { grid-template-columns: repeat(4, 1fr); }
+  .mode-portrait .sl-grid { grid-template-columns: repeat(2, 1fr); }
+</style>
+
+<section class="w-full h-full overflow-auto bg-white">
+  <div class="h-full flex flex-col p-12">
+
+    <!-- Header -->
+    <div class="flex items-start justify-between mb-6">
+      <div>
+        <p class="text-xs font-semibold tracking-widest uppercase text-amber-500 mb-2">Platform Capabilities</p>
+        <h2 class="text-3xl font-extrabold text-slate-900">Everything the session tells you.</h2>
+      </div>
+      <!-- Persona chips -->
+      <div class="flex gap-2 flex-wrap justify-end">
+        <span class="text-xs font-semibold px-4 py-1.5 rounded-full bg-slate-900 text-white">Hiring Managers</span>
+        <span class="text-xs font-semibold px-4 py-1.5 rounded-full bg-amber-100 text-amber-900 border border-amber-300">UX Researchers</span>
+        <span class="text-xs font-semibold px-4 py-1.5 rounded-full bg-amber-100 text-amber-900 border border-amber-300">Journalists</span>
+      </div>
+    </div>
+
+    <!-- Feature grid -->
+    <div class="sl-grid grid gap-4 flex-1 min-h-0">
+
+      <div class="rounded-xl bg-slate-900 p-6 flex flex-col gap-3">
+        <div class="w-9 h-9 rounded-lg bg-amber-400 flex items-center justify-center">
+          <svg class="w-5 h-5 text-slate-900" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z"/>
+          </svg>
+        </div>
+        <h3 class="text-white font-bold text-sm">Audio Upload & Recording</h3>
+        <p class="text-slate-400 text-xs leading-relaxed">Upload MP3, WAV, or M4A files — or record directly in the browser.</p>
+      </div>
+
+      <div class="rounded-xl bg-slate-50 border border-slate-200 p-6 flex flex-col gap-3">
+        <div class="w-9 h-9 rounded-lg bg-slate-900 flex items-center justify-center">
+          <svg class="w-5 h-5 text-amber-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+          </svg>
+        </div>
+        <h3 class="text-slate-900 font-bold text-sm">Auto-Transcription</h3>
+        <p class="text-slate-600 text-xs leading-relaxed">Timestamped, speaker-labeled transcripts delivered in seconds.</p>
+      </div>
+
+      <div class="rounded-xl bg-amber-500 p-6 flex flex-col gap-3">
+        <div class="w-9 h-9 rounded-lg bg-white flex items-center justify-center">
+          <svg class="w-5 h-5 text-amber-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"/>
+          </svg>
+        </div>
+        <h3 class="text-white font-bold text-sm">Sentiment Analysis</h3>
+        <p class="text-amber-100 text-xs leading-relaxed">Per-speaker emotional arc charted across the full session timeline.</p>
+      </div>
+
+      <div class="rounded-xl bg-slate-50 border border-slate-200 p-6 flex flex-col gap-3">
+        <div class="w-9 h-9 rounded-lg bg-slate-900 flex items-center justify-center">
+          <svg class="w-5 h-5 text-amber-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z"/>
+          </svg>
+        </div>
+        <h3 class="text-slate-900 font-bold text-sm">Topic Extraction</h3>
+        <p class="text-slate-600 text-xs leading-relaxed">Key themes ranked by frequency — instantly see what dominated the session.</p>
+      </div>
+
+      <div class="rounded-xl bg-slate-50 border border-slate-200 p-6 flex flex-col gap-3">
+        <div class="w-9 h-9 rounded-lg bg-slate-900 flex items-center justify-center">
+          <svg class="w-5 h-5 text-amber-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"/>
+          </svg>
+        </div>
+        <h3 class="text-slate-900 font-bold text-sm">Talk-Time Analytics</h3>
+        <p class="text-slate-600 text-xs leading-relaxed">Visual ratio breakdown — flag sessions where the interviewer dominated.</p>
+      </div>
+
+      <div class="rounded-xl bg-slate-50 border border-slate-200 p-6 flex flex-col gap-3">
+        <div class="w-9 h-9 rounded-lg bg-slate-900 flex items-center justify-center">
+          <svg class="w-5 h-5 text-amber-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/>
+          </svg>
+        </div>
+        <h3 class="text-slate-900 font-bold text-sm">Filler Detection</h3>
+        <p class="text-slate-600 text-xs leading-relaxed">Count "um", "uh", and hesitation pauses per speaker across the session.</p>
+      </div>
+
+      <div class="rounded-xl bg-slate-900 p-6 flex flex-col gap-3">
+        <div class="w-9 h-9 rounded-lg bg-amber-400 flex items-center justify-center">
+          <svg class="w-5 h-5 text-slate-900" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/>
+          </svg>
+        </div>
+        <h3 class="text-white font-bold text-sm">Session Summary</h3>
+        <p class="text-slate-400 text-xs leading-relaxed">AI-generated executive summary with the top 3–5 highlight moments.</p>
+      </div>
+
+      <div class="rounded-xl bg-slate-50 border border-slate-200 p-6 flex flex-col gap-3">
+        <div class="w-9 h-9 rounded-lg bg-slate-900 flex items-center justify-center">
+          <svg class="w-5 h-5 text-amber-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z"/>
+          </svg>
+        </div>
+        <h3 class="text-slate-900 font-bold text-sm">Export & Sharing</h3>
+        <p class="text-slate-600 text-xs leading-relaxed">PDF reports and shareable links with access control for stakeholders.</p>
+      </div>
+
+    </div>
+  </div>
+</section>
